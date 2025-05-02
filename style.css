@@ -1,0 +1,132 @@
+main{
+    background-image: url("public/bg1.jpeg");
+    background-repeat: no-repeat; 
+    background-size: cover;
+    /* background-attachment: fixed;
+    background-position: center; */
+    height: 100vh;
+    width: 100vw;
+    margin-top: -8px;
+    margin-left: -8px;
+}
+
+header{
+    background-color: rgba(253, 245, 245, 0.4);
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+nav{
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-category{
+    display: flex;
+    gap: 30px;
+}
+
+.user-details{
+    display: flex;
+    gap:30px
+}
+
+.bi-person-fill{
+    margin-top: -4px;
+    font-size: 25px;
+}
+
+.heading-title{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 25px;
+    margin-top: 80px;
+}
+
+.heading-title h1{
+    font-size: 53px;
+}
+
+.heading-title div button{
+    width: 130px;
+    padding: 14px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+#find-more-btn{
+    margin-left: 40px;
+    background-color: rgba(238, 146, 8, 0);
+}
+
+#find-more-btn:hover{
+    background-color: white;
+    color: black;
+}
+
+#shop-now-btn{
+    background-color: white;
+}
+
+#shop-now-btn:hover{
+    background-color: black;
+    color: white;
+}
+
+#ecom-trainer{
+    height: 100vh;
+    width: 100vw;
+
+}
+
+#marquee{
+    margin-top: 100px;
+    margin: 50px;
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.trainer-card-container{
+    height: 70%;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+
+}
+
+.trainer-card{
+    margin: 20px;
+    width: 28%;
+    height: 100%;
+    border: 1px solid black;
+
+}
+
+.featured-products{
+    height: auto;
+    width: 100vw;
+    font-family: arial;
+    background-color: aliceblue;
+}
+
+.featured-products h1{
+    text-align: center;
+    font-size: 38px;
+}
+
+.products-card-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+    margin: 10px;
+}
+
+.product-card{
+    width: 230px;
+    height: 400px;
+    border: 1px solid black;
+}
