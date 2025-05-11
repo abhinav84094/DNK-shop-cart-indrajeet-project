@@ -1,0 +1,38 @@
+.product-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+}
+
+.product-img img {
+  max-width: 300px;
+  height: auto;
+}
+
+.product-info {
+  max-width: 500px;
+}
+
+#buy-now, #add-to-cart {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+#buy-now {
+  background-color: black;
+  color: white;
+}
+
+#add-to-cart {
+  background-color: orange;
+  color: white;
+}
+.product-info p {
+  font-size: 16px;
+  margin: 10px 0;
+}
