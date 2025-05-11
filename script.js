@@ -46,3 +46,11 @@ async function abc(){
 
 abc();
 
+const navToggle = document.querySelector('.nav-toggle');
+const navCategory = document.querySelector('.nav-category');
+const userDetails = document.querySelector('.user-details');
+
+navToggle.addEventListener('click', () => {
+    navCategory.classList.toggle('active');
+    userDetails.classList.toggle('active');
+});

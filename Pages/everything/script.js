@@ -1,5 +1,7 @@
 const api = "https://fakestoreapi.com/products" ;
 
+const card_body = document.getElementById("card_body");
+
 var data;
 
 async function abc(){
@@ -43,3 +45,12 @@ async function abc(){
 
 abc();
 
+// Navbar toggle functionality
+const toggleBtn = document.getElementById("nav-toggle");
+const navCategory = document.querySelector(".nav-category");
+const userDetails = document.querySelector(".user-details");
+
+toggleBtn.addEventListener("click", () => {
+  navCategory.classList.toggle("show");
+  userDetails.classList.toggle("show");
+});
