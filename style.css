@@ -93,6 +93,35 @@ nav {
   color: black;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+.card_img{
+    height: 200px;
+    width: 198px;
+}
+.bottom_block{
+    background-image:url("public/Cute-Girl-Backgrounds-HD.jpg");
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+}
+.bottom_block h4,h1,h3{
+    margin-left: 30px;
+}
+#shop_button{
+    background-color: white;
+    width: 130px;
+    padding: 14px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+#shop_button:hover{
+    background-color: black;
+    color: white;
+}
+=======
+>>>>>>> e1ea9cc0b7407abe87d0e21f4ee32cb0003032dd
 .heading-title h1 {
   font-size: 3rem;
   /* margin-bottom: -20px; */
@@ -255,3 +284,7 @@ nav {
     height: 150px;
   }
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 98ac8ce8b3e6f828ac29a0a188f417ffbb01ae31
+>>>>>>> e1ea9cc0b7407abe87d0e21f4ee32cb0003032dd
