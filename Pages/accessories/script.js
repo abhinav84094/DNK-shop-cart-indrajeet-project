@@ -21,7 +21,8 @@ async function abc(){
 
         if(data[i].category == "electronics"){
 
-            const card = document.createElement("div");
+            const card = document.createElement("a");
+            card.href = `../product_details/index.html?id=${data[i].id}`;
             card.classList.add("card");
         
             card_body.appendChild(card);
