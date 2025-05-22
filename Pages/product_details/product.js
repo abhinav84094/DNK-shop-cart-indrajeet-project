@@ -1,16 +1,21 @@
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
-fetch(`https://fakestoreapi.com/products/${productId}`)
+const api = `http://localhost:3002/product/${productId}` ;
+
+const fakeApi = `https://fakestoreapi.com/products/${productId}`;
+
+fetch(api)
   .then(res => res.json())
   .then(product => {
-    document.getElementById("product-image").src = product.image;
+    console.log(product);
+    document.getElementById("product-image").src =`http://localhost:3002/uploads/${product.image}`;
     document.getElementById("product-title").textContent = product.title;
     document.getElementById("product-category").textContent = product.category;
     document.getElementById("product-desc").textContent = product.description;
     document.getElementById("product-price").textContent = `$${product.price}`;
-    document.getElementById("product-rating").textContent = product.rating.rate;
-    document.getElementById("product-rating-count").textContent = product.rating.count;
+    // document.getElementById("product-rating").textContent = product.rating.rate;
+    // document.getElementById("product-rating-count").textContent = product.rating.count;
 
     // Add to cart
     document.getElementById("add-to-cart").addEventListener("click", () => {

@@ -12,6 +12,7 @@ async function fetchProducts() {
     try {
         const response = await fetch(api);
         const data = await response.json();
+        console.log(data);
         
         // Render products except those already bought
         renderProducts(data);
