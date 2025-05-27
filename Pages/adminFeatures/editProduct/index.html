@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: #f9f9f9;
+    }
+    .product-info {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    .product-info h2 {
+      margin-top: 0;
+    }
+    button {
+      cursor: pointer;
+      padding: 8px 16px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    #buy-now {
+      background-color: #28a745;
+      color: white;
+    }
+    #edit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    #delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+    form {
+      margin-top: 20px;
+      background: #eee;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    form button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-info">
+    <h2 id="product-title"></h2>
+    <p><strong>Category:</strong> <span id="product-category"></span></p>
+    <p id="product-desc"></p>
+    <h3 id="product-price"></h3>
+
+    <button id="edit-btn">Edit</button>
+    <button id="delete-btn">Delete</button>
+
+    <!-- Hidden edit form -->
+    <form id="edit-form">
+      <label>Title:
+        <input type="text" id="edit-title" name="title" required />
+      </label>
+
+      <label>Category:
+        <select id="edit-category" name="category" required>
+          <option value="">--Select Category--</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Books">Books</option>
+          <option value="Home">Home</option>
+        </select>
+      </label>
+
+      <label>Description:
+        <textarea id="edit-desc" name="description" rows="4" required></textarea>
+      </label>
+
+      <label>Price:
+        <input type="number" step="0.01" id="edit-price" name="price" required />
+      </label>
+
+      <button type="submit" id="update-btn">Update</button>
+      <button type="button" id="cancel-edit">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+
+    const productTitle = document.getElementById("product-title");
+    const productCategory = document.getElementById("product-category");
+    const productDesc = document.getElementById("product-desc");
+    const productPrice = document.getElementById("product-price");
+
+    const editBtn = document.getElementById("edit-btn");
+    const deleteBtn = document.getElementById("delete-btn");
+    const editForm = document.getElementById("edit-form");
+    const cancelEditBtn = document.getElementById("cancel-edit");
+
+    // Edit form inputs
+    const editTitle = document.getElementById("edit-title");
+    const editCategory = document.getElementById("edit-category");
+    const editDesc = document.getElementById("edit-desc");
+    const editPrice = document.getElementById("edit-price");
+
+    async function loadProduct() {
+      try {
+        const res = await fetch(`http://localhost:3002/product/${productId}`);
+        if (!res.ok) throw new Error("Product not found");
+
+        const product = await res.json();
+
+        // Show product details
+        productTitle.textContent = product.title;
+        productCategory.textContent = product.category;
+        productDesc.textContent = product.description;
+        productPrice.textContent = `$${product.price.toFixed(2)}`;
+
+        // Fill form inputs
+        editTitle.value = product.title;
+        editCategory.value = product.category;
+        editDesc.value = product.description;
+        editPrice.value = product.price;
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load product.");
+      }
+    }
+
+    loadProduct();
+
+    // Show edit form
+    editBtn.addEventListener("click", () => {
+      editForm.style.display = "block";
+      window.scrollTo({ top: editForm.offsetTop, behavior: "smooth" });
+    });
+
+    // Cancel edit
+    cancelEditBtn.addEventListener("click", () => {
+      editForm.style.display = "none";
+    });
+
+    // Update product
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const updatedProduct = {
+        title: editTitle.value,
+        category: editCategory.value,
+        description: editDesc.value,
+        price: parseFloat(editPrice.value),
+      };
+
+      try {
+        const response = await fetch(`http://localhost:3002/product/${productId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedProduct),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || `Update failed with status ${response.status}`);
+        }
+
+        alert("Product updated successfully!");
+        editForm.style.display = "none";
+        loadProduct();
+
+      } catch (err) {
+        console.error("Error updating product:", err);
+        alert("Failed to update product: " + err.message);
+      }
+    });
+
+    // Delete product permanently
+    deleteBtn.addEventListener("click", async () => {
+      if (!confirm("Are you sure you want to permanently delete this product?")) return;
+
+      try {
+        const response = await fetch(`http://localhost:3002/product/${productId}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || `Delete failed with status ${response.status}`);
+        }
+
+        alert("Product deleted successfully!");
+        // Redirect to homepage or product list
+        window.location.href = "../../everything/index.html";
+
+      } catch (err) {
+        console.error("Error deleting product:", err);
+        alert("Failed to delete product: " + err.message);
+      }
+    });
+
+    
+  </script>
+</body>
+</html>

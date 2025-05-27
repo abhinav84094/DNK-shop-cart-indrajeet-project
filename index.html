@@ -1,124 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: red;
+    }
+  </style>
 </head>
-<body >
-    <main>
-        <header>
-            <nav >
-            
-                <div class="nav-toggle">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
+<body>
 
-                <span class="nav-category">
-                    <span style="font-size: 40px; font-weight: 900; margin-right:30px; margin-top:-20px;">DNK</span>
-                    <a href="Pages/everything/index.html">EVERYTHING</a>
-                    <a href="Pages/women/index.html">WOMEN</a>
-                    <a href="Pages/men/index.html">MEN</a>
-                    <a href="Pages/accessories/index.html">ACCESSORIES</a>
-                </span>
-                <span class="user-details">
-                    <span>ABOUT</span>
-                    <span>CONTACT US</span>
-                    <span class="bi bi-currency-dollar">0.0</span>
-                    <span class="bi bi-bag-fill"></span>
-                    <a href="./Pages/authentication/login/login.html"><span class="bi bi-person-fill" style="margin-right: 30px;"></span></a>
-                </span>
-            </nav>
-    
-        </header>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="mobile">Mobile Number</label>
+      <input type="text" id="mobile" name="mobile" required />
 
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
 
-        <div class="heading-title" >
-            <h1 >Raining Offers For </h1>
-            <h1>Hot Summer!</h1>
-            <h2>25% Off On All Products</h2>
+      <button type="submit">Log In</button>
+      <a href="signup.html">signup</a>
+      <div class="message" id="message"></div>
+    </form>
+  </div>
 
-            <div>
-                <button id="shop-now-btn">SHOP NOW</button>
-                <button id="find-more-btn">FIND MORE</button>
-            </div>
-        </div>
+  <script>
+    const form = document.getElementById('login-form');
+    const messageDiv = document.getElementById('message');
 
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
+      const formData = {
+        mobile: form.mobile.value,
+        password: form.password.value,
+      };
 
+      try {
+        const res = await fetch('http://localhost:3002/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
-    </main>
+        const data = await res.json();
 
-    <div id="ecom-trainer">
-        <div id="marquee">
-            <marquee scrollamount="20">
-            I think this is the place which you needs
-            </marquee>
-        </div>
+        if (res.ok) {
+          messageDiv.style.color = 'green';
+          messageDiv.textContent = 'Login successful! Welcome ' + data.username;
+          // redirect or store token if needed
+            // Redirect to home page after 1 second delay (optional)
+            setTimeout(() => {
+                window.location.href = 'home.html';  // Or your actual home page URL, e.g., '/index.html' or full path
+            }, 1000);
+        } else {
+          messageDiv.style.color = 'red';
+          messageDiv.textContent = data.error || 'Login failed';
+        }
+      } catch (err) {
+        console.error(err);
+        messageDiv.textContent = 'Something went wrong';
+      }
+    });
+  </script>
 
-        <div class="trainer-card-container">
-            <div class="trainer-card">
-                <h2>20% Off On Tank Tops</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.</p>
-                <button id="shop-now-btn">SHOP NOW</button>
-            </div>
-
-            <div class="trainer-card">
-                <h2>2Latest Eyewear For You</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.​</p>
-                <button id="shop-now-btn">SHOP NOW</button>
-            </div>
-
-            <div class="trainer-card">
-                <h2>Let's Lorem Suit Up!</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.​</p>
-                <button id="shop-now-btn">SHOP NOW</button>
-            </div>
-        </div>
-        
-        </div>
-    </div>
-
-    <div class="featured-products">
-        <div style=" height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <h1>Featured Products</h1>
-            <hr style="width: 150px; border:1.4px solid orange;">
-        </div>
-
-        <div class="card_body">
-
-        </div>
-    </div>
-    <div class="bottom_block">
-        <h4>Limited Time Offer </h4>
-        <h1>Special Edition</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec <br> ullamcorper mattis, pulvinar dapibus leo.</p>
-        <h3>Buy This T-shirt At 20% Discount, Use Code OFF20</h3>
-        <div>
-            <button id="shop_button"><a href="index.html">SHOP NOW</a></button>
-        </div>
-       
-    </div>
-    <div>
-        <span>
-            <img src="./public/globe-free-img.png" alt="not found">
-        </span>
-        <span>
-            <img src="./public/lock-free-img copy.png" alt="">
-        </span>
-        <span>
-            <img src="./public/quality-free-img.png" alt="">
-        </span>
-        <span>
-            <img src="./public/tag-free-img.png" alt="">
-        </span>
-    </div>
-    
-    <script src="script.js"></script>
 </body>
 </html>
-

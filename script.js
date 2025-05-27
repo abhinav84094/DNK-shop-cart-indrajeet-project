@@ -39,31 +39,10 @@ function renderProducts(products) {
         const h4 = document.createElement("h4");
         h4.textContent = product.title;
 
-        const addToCartBtn = document.createElement("button");
-        addToCartBtn.textContent = "Add to Cart";
-        addToCartBtn.classList.add("shop-now-btn");
-        addToCartBtn.onclick = () => {
-            cart.push(product);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartIcon();
-            addToCartBtn.textContent = "Added to Cart";
-            addToCartBtn.disabled = true; // Disable the button once added
-        };
-
-        const buyBtn = document.createElement("button");
-        buyBtn.textContent = "Buy";
-        buyBtn.classList.add("shop-now-btn");
-        buyBtn.onclick = () => {
-            alert("Thank you! Your order will be processed soon.");
-            bought.push(product.id);
-            localStorage.setItem("bought", JSON.stringify(bought));
-            renderProducts(products); // Re-render without this item
-        };
-
+       
         card.appendChild(img);
         card.appendChild(h4);
-        card.appendChild(addToCartBtn);
-        card.appendChild(buyBtn);
+        
         card_body.appendChild(card);
     });
 }

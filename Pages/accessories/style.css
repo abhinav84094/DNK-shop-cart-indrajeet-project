@@ -25,6 +25,8 @@ nav {
   flex-wrap: wrap;
 }
 
+
+
 .nav-category,
 .user-details {
   display: flex;
@@ -107,4 +109,36 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+}
+
+/* Toggle Button */
+.nav-toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-category,
+  .user-details {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .nav-category.show,
+  .user-details.show {
+    display: flex;
+  }
 }

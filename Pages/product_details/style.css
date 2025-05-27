@@ -15,7 +15,7 @@
   max-width: 500px;
 }
 
-#buy-now, #add-to-cart {
+#buy-now, #edit-btn {
   padding: 10px 20px;
   margin: 10px;
   border: none;
@@ -28,8 +28,8 @@
   color: white;
 }
 
-#add-to-cart {
-  background-color: orange;
+#edit-btn {
+  background-color: black;
   color: white;
 }
 .product-info p {

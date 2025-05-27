@@ -19,14 +19,11 @@ form.addEventListener("submit", async (e) => {
     const result = await response.json();
     console.log("Server response:", result);
     alert("Product submitted successfully!");
-
-    // Only reset form on successful submission
-    form.reset();
+    window.location.href = "/DNK-shop-cart-indrajeet-project/Pages/everything/index.html";
+    // window.location.href = "../../home.html";
 
   } catch (err) {
     console.error("Error submitting product:", err);
     alert("Something went wrong: " + err.message);
-
-    // NO form.reset() here — so form keeps the data!
   }
 });

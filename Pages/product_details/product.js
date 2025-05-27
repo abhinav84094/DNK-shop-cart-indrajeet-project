@@ -18,14 +18,14 @@ fetch(api)
     // document.getElementById("product-rating-count").textContent = product.rating.count;
 
     // Add to cart
-    document.getElementById("add-to-cart").addEventListener("click", () => {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push(product);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert("Added to cart!");
-      window.location.href = "/frontened/index.html";
+    // document.getElementById("add-to-cart").addEventListener("click", () => {
+    //   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    //   cart.push(product);
+    //   localStorage.setItem("cart", JSON.stringify(cart));
+    //   alert("Added to cart!");
+    //   window.location.href = "../../home.html";
 
-    });
+    // });
 
     // Buy now
     // Buy now button functionality
@@ -38,8 +38,13 @@ fetch(api)
         localStorage.setItem("bought", JSON.stringify(bought));
         
         // Redirect to the homepage
-        window.location.href = "/frontened/index.html";  // Ensure this is the correct path on your GitHub Pages
+        window.location.href = "../../home.html";  // Ensure this is the correct path on your GitHub Pages
     });
+
+    document.getElementById("edit-btn").addEventListener("click", () => {
+  window.location.href = `../adminFeatures/editProduct/index.html?id=${productId}`;
+});
+
 
 
   })
