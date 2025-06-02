@@ -74,37 +74,70 @@
   </div>
 
   <script>
-    const form = document.getElementById('signupForm');
-    const errorMsg = document.getElementById('errorMsg');
+  const form = document.getElementById('signupForm');
+  const errorMsg = document.getElementById('errorMsg');
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      const username = document.getElementById('username').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+    const username = document.getElementById('username').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
-      if (mobile.length !== 10 || isNaN(mobile)) {
-        errorMsg.textContent = "Enter a valid 10-digit mobile number.";
-        return;
+    // Basic validation
+    if (mobile.length !== 10 || isNaN(mobile)) {
+      errorMsg.textContent = "Enter a valid 10-digit mobile number.";
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorMsg.textContent = "Passwords do not match.";
+      return;
+    }
+
+    if (password.length < 6) {
+      errorMsg.textContent = "Password must be at least 6 characters.";
+      return;
+    }
+
+    // Clear error message
+    errorMsg.textContent = "";
+
+    // Prepare data to send
+    const userData = {
+      username,
+      mobile,
+      password
+    };
+
+    try {
+      const response = await fetch('http://localhost:3002/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(`Hello ${username}, you are successfully registered!`);
+        form.reset();
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 300);
+      } else {
+        errorMsg.textContent = result.message || 'Registration failed.';
       }
+    } catch (error) {
+      console.error('Error:', error);
+      errorMsg.textContent = `Something went wrong. Please try again. ${error.message}`;
+    }
+  });
+</script>
 
-      if (password !== confirmPassword) {
-        errorMsg.textContent = "Passwords do not match.";
-        return;
-      }
-
-      if (password.length < 6) {
-        errorMsg.textContent = "Password must be at least 6 characters.";
-        return;
-      }
-
-      errorMsg.textContent = "";
-      alert(`Hello ${username}, you are successfully registered!`);
-      form.reset();
-    });
-  </script>
 
 </body>
 </html>

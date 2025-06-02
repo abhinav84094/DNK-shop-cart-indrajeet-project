@@ -6,6 +6,51 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        .footer{
+    background-color: #f8f8f8;
+    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 300px;
+}
+h2 a{
+    text-decoration: none;
+}
+h2,h1{
+    margin-left: 10%;
+}
+.subscribe{
+    width: 250px;
+    
+}
+.women{
+    width: 250px;
+}
+.men{
+    width: 250px;
+}
+button{
+    margin-top: 15px;
+    background: color #0096ff;;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+    
+}
+.women a{
+    text-decoration: none;
+    line-height: 2;
+}
+.men a{
+    text-decoration: none;
+    line-height: 2;
+}
+    </style>
 </head>
 <body >
     <main>
@@ -26,12 +71,13 @@
                     <a href="Pages/accessories/index.html">ACCESSORIES</a>
                 </span>
                 <span class="user-details">
-                    <span><a href="pages/about/index.html">ABOUT</a></span>
-                    <span><a href="pages/contact/index.html">CONTACT US</a></span>
+                    <span><a href="./Pages/about/about.html">ABOUT</a></span>
+                    <span><a href="https://abhinav84094.github.io/My_Portfolio/">CONTACT US</a></span>
                     <span class="bi bi-currency-dollar">0.0</span>
-                    <span class="bi bi-bag-fill"></span>
-                    <a href="./Pages/adminFeatures/addProduct/index.html"><span class="bi bi-person-fill" style="margin-right: 30px;"></span></a>
-                </span>
+                    <a href="./Pages/track-status/index.html"><span class="bi bi-bag-fill"></span></a>
+                    <a href="./Pages/adminFeatures/addProduct/index.html" id="addProductBtn"><span class="bi bi-person-fill" style="margin-right: 30px;"></span></a>
+                    <button onclick="logOut()">Logout</button>
+                  </span>
             </nav>
     
         </header>
@@ -209,6 +255,40 @@
     <img src="./public/tag-free-img.png" alt="" style="width: 60px; height: 60px;">
   </span>
 </div>
+
+    <a  href="home.html"><marquee style="font-size: 30px;">SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.</marquee></a>
+    <div class="footer">
+        <div>
+            <h1><i>DNK</i></h1>
+            <h2>The best look anytime, anywhere. </h2>
+        </div>
+        <div class="women">
+            <h3>For Her</h3>
+            <p><a href="home.html">
+                Women Jeans <br>
+                Tops and Shirts <br>
+                Women Jackets <br>
+                Heels and Flats <br>
+                Women Accessories</a></p>
+
+        </div>
+        <div class="men">
+            <h3>For Him</h3>
+            <p> <a href="home.html">Men Jeans <br>
+                Men Shirts <br>
+                Men Shoes <br>
+                Men Accessories <br>
+                Men Jackets</a></p>
+
+        </div>
+        <div class="subscribe">
+            <h3>Subscribe</h3>
+            <form  action="#" method="post">
+                <input type="email" name="email" placeholder="your email address..." required>
+            </form>
+            <button type="submit">Subscribe</button>
+        </div>
+    </div>
 
     
     <script src="script.js"></script>

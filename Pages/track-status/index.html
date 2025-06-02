@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Orders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .order-list {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .order-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .order-card img {
+      width: 100px;
+      height: auto;
+      float: right;
+    }
+
+    .order-card p {
+      margin: 6px 0;
+    }
+
+    .order-status {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Your Orders</h2>
+  <div class="order-list" id="orderList">
+    <!-- Orders will be injected here -->
+  </div>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const container = document.getElementById("orderList");
+
+    if (orders.length === 0) {
+      container.innerHTML = "<p style='text-align:center;'>You have no orders yet.</p>";
+    } else {
+      orders.reverse().forEach(order => {
+        const card = document.createElement("div");
+        card.className = "order-card";
+
+        card.innerHTML = `
+          <img src="http://localhost:3002/uploads/${order.product.image}" />
+          <p><strong>Order ID:</strong> ${order.id}</p>
+          <p><strong>Product:</strong> ${order.product.title}</p>
+          <p><strong>Price:</strong> $${order.product.price}</p>
+          <p><strong>Payment:</strong> ${order.paymentMethod}</p>
+          <p><strong>Status:</strong> <span class="order-status">${order.status}</span></p>
+          <p><strong>Ordered On:</strong> ${order.orderDate}</p>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+
+</body>
+</html>

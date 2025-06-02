@@ -97,20 +97,23 @@
         const data = await res.json();
 
         if (res.ok) {
-          messageDiv.style.color = 'green';
-          messageDiv.textContent = 'Login successful! Welcome ' + data.username;
-          // redirect or store token if needed
-            // Redirect to home page after 1 second delay (optional)
-            setTimeout(() => {
-                window.location.href = 'home.html';  // Or your actual home page URL, e.g., '/index.html' or full path
-            }, 1000);
-        } else {
+  localStorage.setItem('token', data.token);    // Save JWT token
+  localStorage.setItem('username', data.username);
+
+  messageDiv.style.color = 'green';
+  messageDiv.textContent = 'Login successful! Welcome ' + data.username;
+
+  setTimeout(() => {
+      window.location.href = 'home.html';
+  }, 300);
+}
+else {
           messageDiv.style.color = 'red';
           messageDiv.textContent = data.error || 'Login failed';
         }
       } catch (err) {
         console.error(err);
-        messageDiv.textContent = 'Something went wrong';
+        messageDiv.textContent = `Something went wrong ${err.message}`;
       }
     });
   </script>

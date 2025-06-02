@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Detail</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Optional: Add some styles for buttons if needed */
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .product-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-img img {
+      width: 300px;
+      height: auto;
+      object-fit: contain;
+    }
+    .product-info {
+      max-width: 500px;
+    }
+  </style>
 </head>
 <body>
   <div class="product-detail">
@@ -15,17 +38,12 @@
       <h2 id="product-title"></h2>
       <p><strong>Category:</strong> <span id="product-category"></span></p>
       <p id="product-desc"></p>
-      <!-- <p>
-        <strong>Rating:</strong> 
-        <span id="product-rating"></span> z
-        (<span id="product-rating-count"></span> reviews)
-      </p> -->
       <h3 id="product-price"></h3>
+
+      <!-- Buttons -->
       <button id="buy-now">Buy Now</button>
-      <button id="edit-btn">Edit</button>
-
-
-      <!-- <button id="add-to-cart">Add to Cart</button> -->
+      <button id="edit-btn" style="display: none;">Edit</button>
+      <!-- Delete button will be injected via JS if admin -->
     </div>
   </div>
 

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Place Order</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      width: 90%;
+    }
+
+    .order-form-container {
+      width: 50%;
+    }
+
+    .product-summary {
+      width: 50%;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea, select {
+      margin-bottom: 15px;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .confirmation {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .product-summary img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .product-summary .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    #otpPopup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .otp-box {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .otp-box input {
+      width: 150px;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="order-form-container">
+      <h2>Place Your Order</h2>
+      <form id="orderForm">
+        <input type="text" id="name" placeholder="Full Name" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+        <input type="text" id="mobile" placeholder="Mobile Number" required />
+        <textarea id="address" placeholder="Delivery Address" rows="4" required></textarea>
+        <select id="paymentMethod" required>
+          <option value="" disabled selected>Select Payment Method</option>
+          <option value="cod">Cash on Delivery</option>
+          <option value="card">Credit/Debit Card</option>
+          <option value="upi">UPI</option>
+        </select>
+        <button type="submit">Confirm Order</button>
+        <div class="confirmation" id="confirmationMessage"></div>
+      </form>
+    </div>
+
+    <div class="product-summary" id="productSummary">
+      <h2>Order Summary</h2>
+      <!-- Product info via JS -->
+    </div>
+  </div>
+
+  <!-- OTP Popup -->
+  <div id="otpPopup">
+    <div class="otp-box">
+      <h3>Enter OTP</h3>
+      <p>We sent an OTP to your mobile: <span id="otp-display"></span></p>
+      <input type="text" id="otpInput" maxlength="6" />
+      <br><br>
+      <button onclick="verifyOtp()">Verify</button>
+    </div>
+  </div>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    const summary = document.getElementById("productSummary");
+    let generatedOtp = "";
+
+    if (product) {
+      summary.innerHTML += `
+        <img src="http://localhost:3002/uploads/${product.image}" alt="${product.title}" />
+        <p><strong>${product.title}</strong></p>
+        <p>${product.description}</p>
+        <p class="price">$${product.price}</p>
+      `;
+    }
+
+    const form = document.getElementById('orderForm');
+    const confirmation = document.getElementById('confirmationMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const mobile = document.getElementById('mobile').value.trim();
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        confirmation.style.color = 'red';
+        confirmation.textContent = 'Please enter a valid 10-digit mobile number.';
+        return;
+      }
+
+      // Simulate OTP sending
+      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById("otp-display").textContent = generatedOtp;
+      document.getElementById("otpPopup").style.display = "flex";
+    });
+
+    function verifyOtp() {
+      const userOtp = document.getElementById("otpInput").value.trim();
+      if (userOtp === generatedOtp) {
+        document.getElementById("otpPopup").style.display = "none";
+        // Simulate payment and success
+        setTimeout(() => {
+          alert("Payment successful!\nThanks for shopping with DNK.");
+
+                      // Save order to "orders" in localStorage
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+        const newOrder = {
+          id: Date.now(), // unique ID
+          product: product,
+          name: document.getElementById('name').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          mobile: document.getElementById('mobile').value.trim(),
+          address: document.getElementById('address').value.trim(),
+          paymentMethod: document.getElementById('paymentMethod').value,
+          status: "Confirmed",
+          orderDate: new Date().toLocaleString()
+        };
+
+        orders.push(newOrder);
+        localStorage.setItem("orders", JSON.stringify(orders));
+          window.location.href = "../../../home.html";
+        }, 1000);
+      } else {
+        alert("Incorrect OTP. Please try again.");
+      }
+    }
+
+
+
+
+
+  </script>
+
+</body>
+</html>
