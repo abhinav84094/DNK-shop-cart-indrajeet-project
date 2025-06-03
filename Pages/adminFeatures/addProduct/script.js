@@ -4,11 +4,16 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
+  const token = localStorage.getItem("token");
+  console.log(formData);
 
   try {
     const response = await fetch("http://localhost:3002/addProduct", {
       method: "POST",
       body: formData,
+      headers: {
+        "Authorization": `Bearer ${token}` // ✅ Fix here
+      },
     });
 
     if (!response.ok) {
@@ -19,8 +24,7 @@ form.addEventListener("submit", async (e) => {
     const result = await response.json();
     console.log("Server response:", result);
     alert("Product submitted successfully!");
-    window.location.href = "/DNK-shop-cart-indrajeet-project/Pages/everything/index.html";
-    // window.location.href = "../../home.html";
+    window.location.href = "../../everything/index.html";
 
   } catch (err) {
     console.error("Error submitting product:", err);

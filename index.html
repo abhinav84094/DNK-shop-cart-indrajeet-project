@@ -68,7 +68,7 @@
       <input type="password" id="password" name="password" required />
 
       <button type="submit">Log In</button>
-      <a href="signup.html">signup</a>
+      <a href="./signup.html">signup</a>
       <div class="message" id="message"></div>
     </form>
   </div>
@@ -95,16 +95,19 @@
         });
 
         const data = await res.json();
+        console.log(data);
 
         if (res.ok) {
-  localStorage.setItem('token', data.token);    // Save JWT token
-  localStorage.setItem('username', data.username);
+          localStorage.setItem('token', data.token);    // Save JWT token
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('mobile', data.mobile);
+          console.log(data.token);
 
   messageDiv.style.color = 'green';
   messageDiv.textContent = 'Login successful! Welcome ' + data.username;
 
   setTimeout(() => {
-      window.location.href = 'home.html';
+      window.location.href = './home.html';
   }, 300);
 }
 else {

@@ -69,7 +69,7 @@
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
       <div class="error" id="errorMsg"></div>
       <button type="submit">Register</button>
-      <a href="index.html">login</a>
+      <a href="./index.html">login</a>
     </form>
   </div>
 
@@ -84,6 +84,23 @@
     const mobile = document.getElementById('mobile').value.trim();
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
+
+     // Reset error message
+    errorMsg.textContent = "";
+
+    // Username validation
+    const usernameRegex = /^[a-zA-Z]{4}[a-zA-Z0-9]*$/;
+
+    if (!usernameRegex.test(username)) {
+      errorMsg.textContent = "Username must be at least 4 characters";
+      return;
+    }
+
+    const mobileRegex = /^[6-9][0-9]{9}$/;
+    if (!mobileRegex.test(mobile)) {
+      errorMsg.textContent = "Mobile number must be exactly 10 digits.";
+      return;
+    }
 
     // Basic validation
     if (mobile.length !== 10 || isNaN(mobile)) {
@@ -126,10 +143,11 @@
         alert(`Hello ${username}, you are successfully registered!`);
         form.reset();
         setTimeout(() => {
-            window.location.href = 'home.html';
+            window.location.href = './index.html';
         }, 300);
       } else {
-        errorMsg.textContent = result.message || 'Registration failed.';
+        console.log(result)
+        errorMsg.textContent = result.error || 'Registration failed.';
       }
     } catch (error) {
       console.error('Error:', error);

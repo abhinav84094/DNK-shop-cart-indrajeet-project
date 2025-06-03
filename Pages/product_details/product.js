@@ -1,8 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
+console.log(productId);
+
 const api = `http://localhost:3002/product/${productId}`;
-const fakeApi = `https://fakestoreapi.com/products/${productId}`;
 
 const buyBtn = document.getElementById("buy-now");
 const editBtn = document.getElementById("edit-btn");
@@ -12,20 +13,19 @@ const username = localStorage.getItem("username");
 const mobile = localStorage.getItem("mobile");
 
 // Show/hide buttons based on user type
-if (username == "admin" ) {
+if (username == "admin") {
   editBtn.style.display = "inline-block";
 
-  // Create Delete button dynamically
   buyBtn.style.display = "none";
   deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.id = "delete-btn";
   document.querySelector(".product-info").appendChild(deleteBtn);
 } else {
-  // Hide edit for non-admins
   editBtn.style.display = "none";
-  deleteBtn.style.display = "none";
+  if (deleteBtn) deleteBtn.style.display = "none";
 }
+
 
 fetch(api)
   .then(res => res.json())
@@ -35,7 +35,7 @@ fetch(api)
     document.getElementById("product-title").textContent = product.title;
     document.getElementById("product-category").textContent = product.category;
     document.getElementById("product-desc").textContent = product.description;
-    document.getElementById("product-price").textContent = `$${product.price}`;
+    document.getElementById("product-price").textContent = `₹${product.price}`;
 
     buyBtn.addEventListener("click", () => {
       localStorage.setItem("selectedProduct", JSON.stringify(product));

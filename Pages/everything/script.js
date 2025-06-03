@@ -25,7 +25,7 @@ async function loadProducts() {
                 // ✅ Set proper values
                 img.src = `http://localhost:3002/uploads/${product.image}`;
                 title.textContent = product.title;
-                price.textContent = `$${product.price}`;
+                price.textContent = `₹${product.price}`;
 
                 img.classList.add("card_img");
 

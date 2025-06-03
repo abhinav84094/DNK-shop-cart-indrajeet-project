@@ -18,6 +18,13 @@
       border-radius: 8px;
       box-shadow: 0 0 10px #ccc;
     }
+    #product-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
     .product-info h2 {
       margin-top: 0;
     }
@@ -70,6 +77,9 @@
 </head>
 <body>
   <div class="product-info">
+    <!-- Image added here -->
+    <img id="product-image" src="" alt="Product Image" />
+
     <h2 id="product-title"></h2>
     <p><strong>Category:</strong> <span id="product-category"></span></p>
     <p id="product-desc"></p>
@@ -87,10 +97,10 @@
       <label>Category:
         <select id="edit-category" name="category" required>
           <option value="">--Select Category--</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Books">Books</option>
-          <option value="Home">Home</option>
+          <option value="accessories">Accessories</option>
+          <option value="men">Men</option>
+          <option value="women">Women</option>
+          <!-- <option value="Home">Home</option> -->
         </select>
       </label>
 
@@ -111,6 +121,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
 
+    const productImage = document.getElementById("product-image");
     const productTitle = document.getElementById("product-title");
     const productCategory = document.getElementById("product-category");
     const productDesc = document.getElementById("product-desc");
@@ -127,6 +138,8 @@
     const editDesc = document.getElementById("edit-desc");
     const editPrice = document.getElementById("edit-price");
 
+    
+
     async function loadProduct() {
       try {
         const res = await fetch(`http://localhost:3002/product/${productId}`);
@@ -134,11 +147,13 @@
 
         const product = await res.json();
 
-        // Show product details
+        // Set image src (adjust URL based on your backend)
+        productImage.src = `http://localhost:3002/uploads/${product.image}`;
+
         productTitle.textContent = product.title;
         productCategory.textContent = product.category;
         productDesc.textContent = product.description;
-        productPrice.textContent = `$${product.price.toFixed(2)}`;
+        productPrice.textContent = `₹${product.price}`;
 
         // Fill form inputs
         editTitle.value = product.title;
@@ -221,8 +236,6 @@
         alert("Failed to delete product: " + err.message);
       }
     });
-
-    
   </script>
 </body>
 </html>

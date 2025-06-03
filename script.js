@@ -7,20 +7,22 @@ window.onload = () => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   const mobile = localStorage.getItem("mobile");
+ 
 
   if (!token) {
     window.location.href = "login.html";
     return;
   }
 
-  // Show Add Product if user is admin
-  if (username != "admin" && mobile != "6299987191") {
-    // if (addProductBtn) addProductBtn.style.display = "block";
-    // if (adminLink) adminLink.style.display = "inline-block";
-  } else {
-    if (addProductBtn) addProductBtn.style.display = "none";
-    if (adminLink) adminLink.style.display = "none";
-  }
+ if (username == "admin" && mobile == "6299987191") {
+  // Show for admin
+  if (addProductBtn) addProductBtn.style.display = "inline-block";
+  if (adminLink) adminLink.style.display = "inline-block";
+} else {
+  if (addProductBtn) addProductBtn.style.display = "none";
+  if (adminLink) adminLink.style.display = "none";
+}
+
 
   fetchProducts();
 
